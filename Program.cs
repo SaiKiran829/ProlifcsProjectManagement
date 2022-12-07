@@ -1,11 +1,11 @@
-﻿using System;
+using System;
 
 
 //Main Class
 public class ProlificsProjectManagement
 {
 
-    
+
     public static void Main(string[] args)
     {
         Console.WriteLine("             ==========Hello Prolifics employee==========");
@@ -29,7 +29,7 @@ public class ProlificsProjectManagement
         EmpManagement obj1 = new EmpManagement();
         RoleManagement objmain = new RoleManagement();
         AddingEmptoProject obj3 = new AddingEmptoProject();
-        objmain.RoleList.Add(new Role(1, "Software "));
+        objmain.RoleList.Add(new Role(1, "Software Engineer"));
         objmain.RoleList.Add(new Role(2, "Associate Software Engineer"));
         objmain.RoleList.Add(new Role(3, "Trainee Software Engineer"));
         objmain.RoleList.Add(new Role(4, "Technical Lead"));
@@ -77,62 +77,90 @@ public class ProlificsProjectManagement
 
 
                 case "3":
-                    try
-                    {
-                        Console.WriteLine("");
-                        Console.WriteLine("");
-                        Console.WriteLine("Enter the Id of employee");
-                        int empId = Convert.ToInt32(Console.ReadLine());
-                        Console.WriteLine("Enter employee first name");
-                        var fname = Console.ReadLine();
-                        Console.WriteLine("Enter employee last name");
-                        var lname = Console.ReadLine();
-                        Console.WriteLine("Enter employee email id");
-                        var EMAIL = Console.ReadLine();
-                        Console.WriteLine("Enter employee mobile number");
-                        var mobile = Console.ReadLine();
-                        Console.WriteLine("Enter address of the employee");
-                        var address = Console.ReadLine();
-                        objmain.displayRole();
-                        int role = Convert.ToInt32(Console.ReadLine());
-                        Console.WriteLine("Select Role name from above list to assign role to employee");
-                        string roleNAME= null;
-                        var assign = Console.ReadLine();
-                        switch(assign){
-                            case "1":
-                            roleNAME = "Software Engineer";
-                            break;
-                            case "2":
-                            roleNAME="Associate Software Engineer";
-                            break;
-                            case "3":
-                            roleNAME = "Trainee Software Engineer";
-                            break;
-                            case "4":
-                            roleNAME="Technical Lead";
-                            break;
-                            default:
-                            Console.WriteLine("Invalid Entry");
-                            break;
-                        }
-                        Employee emp = new Employee(empId, fname, lname, EMAIL, mobile, address, role, roleNAME);
-                        Role roleobj2 = new Role(role, null);
-                        RoleManagement roleobj1 = new RoleManagement();
-                        roleobj1.RoleAdd(roleobj2);
-                        objmain = roleobj1;
-                        obj1.AddEmp(emp);
-                        Console.WriteLine("");
-                        Console.WriteLine("");
-                        Console.WriteLine("Added Successfully!");
-                    }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine("Emp id can only be in numbers");
-                    }
+
                     Console.WriteLine("");
-                    Console.WriteLine("Enter any key to get to main menu");
-                    Console.ReadLine();
-                    break;
+                    Console.WriteLine("");
+                    Console.WriteLine("Enter the Id of employee");
+                    int empId = Convert.ToInt32(Console.ReadLine());
+                    Console.WriteLine("Enter employee first name");
+                    var fname = Console.ReadLine();
+                    Console.WriteLine("Enter employee last name");
+                    var lname = Console.ReadLine();
+                    Console.WriteLine("Enter employee email id");
+                    var EMAIL = Console.ReadLine();
+                    Console.WriteLine("Enter employee mobile number");
+                    var mobile = Console.ReadLine();
+                    Console.WriteLine("Enter address of the employee");
+                    var address = Console.ReadLine();
+                    Console.WriteLine("Select 1 for assinging employee with new role name and new role id");
+                    Console.WriteLine("Select 2 for assinging existing role to the employee");
+                    int selecting = Convert.ToInt32(Console.ReadLine());
+                    if (selecting == 1)
+                    {
+                        try
+                        {
+                            Console.WriteLine("");
+                            Console.WriteLine("");
+                            Console.WriteLine("Enter the Role Id");
+                            int roleID = Convert.ToInt32(Console.ReadLine());
+                            Console.WriteLine("Enter the name of Role");
+                            string role_name = Console.ReadLine();
+                            Console.WriteLine(role_name);
+                            Role newRole = new Role(roleID, role_name);
+                            objmain.RoleAdd(newRole);
+                            Employee yadding = new Employee(empId, fname, lname, EMAIL, mobile, address, roleID, role_name);
+                            obj1.AddEmp(yadding);
+                            Console.WriteLine("");
+                            Console.WriteLine("");
+                            Console.WriteLine("Added Successfully!");
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine("Role Id can only be in numbers");
+                        }
+                    }
+                    else if (selecting == 2)
+                    {
+                        try
+                        {
+                            objmain.displayRole();
+                            Console.WriteLine("Select Role id from above list to assign role to employee");
+                            int role1 = Convert.ToInt32(Console.ReadLine());
+                            string? roleNAME1 = null;
+                            switch (role1)
+                            {
+                                case 1:
+                                    roleNAME1 = "Software Engineer";
+                                    break;
+                                case 2:
+                                    roleNAME1 = "Associate Software Engineer";
+                                    break;
+                                case 3:
+                                    roleNAME1 = "Trainee Software Engineer";
+                                    break;
+                                case 4:
+                                    roleNAME1 = "Technical Lead";
+                                    break;
+                                default:
+                                    Console.WriteLine("Invalid Entry");
+                                    break;
+                            }
+                            Employee emp = new Employee(empId, fname, lname, EMAIL, mobile, address, role1, roleNAME1);
+                            obj1.AddEmp(emp);
+                            Console.WriteLine("");
+                            Console.WriteLine("");
+                            Console.WriteLine("Added Successfully!");
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine("Emp id can only be in numbers");
+                        }
+                    }
+                            
+                            Console.WriteLine("");
+                            Console.WriteLine("Enter any key to get to main menu");
+                            Console.ReadLine();
+                            break;
                 case "4":
                     obj1.ShowEmp();
                     Console.WriteLine("Enter any key to get to main menu");
@@ -210,13 +238,14 @@ public class ProlificsProjectManagement
                     AddEmptoProject ADDTOPROJ = new AddEmptoProject();
                     Project ADDTOPROJ1 = new Project();
                     Employee EMPIDD = new Employee();
-
-                    if(PROJname.Equals(ADDTOPROJ1.ProjectName) && EMPID.Equals(EMPIDD.EmployeeID)){
-                       AddEmptoProject YADD = new AddEmptoProject(PROJname,EMPID);
-                       AddingEmptoProject addition = new AddingEmptoProject();
-                       addition.addingemp(YADD);
+                    if(PROJname == ADDTOPROJ1.ProjectName && int.TryParse(EMPID, out int EmployeeID))
+                    {
+                        AddEmptoProject YADD = new AddEmptoProject(PROJname, EMPID);
+                        AddingEmptoProject addition = new AddingEmptoProject();
+                        addition.addingemp(YADD);
                     }
-                    else{
+                    else
+                    {
                         Console.WriteLine("Invalid Entry bro");
                     }
                     var Read = Console.ReadLine();
@@ -267,7 +296,7 @@ public class Project
     public string Enddate { get; set; }
     public int? id { get; set; }
 
-    
+
     public Project(string projectname, string startdate, string enddate, int Id)
     {
         this.ProjectName = projectname;
@@ -280,7 +309,7 @@ public class Project
 
     }
 
-    
+
 }
 
 //Class which consists of methods for adding and viewing projects
@@ -346,7 +375,7 @@ public class Employee
     public string mobile { get; set; }
     public string address { get; set; }
     public int roleid { get; set; }
-    public string roleName{get;set;}
+    public string roleName { get; set; }
 
 
     public Employee(int empid, string FirstName, string LastName, string Email, string Mobile, string Address, int ROleID, string ROlename)
@@ -382,7 +411,7 @@ public class EmpManagement
 
     public void displayEmp(Employee emp)
     {
-        Console.WriteLine(" Employee Id - " + emp.EmployeeID + "\n Employee first name - " + emp.firstName + "\n Employee last name - " + emp.lastName + "\n Employee email id - " + emp.email + "\n Employee mobile number - " + emp.mobile + "\n Employee address - " + emp.address +"\n Role Id - "+emp.roleid+"\n Role Name - "+emp.roleName);
+        Console.WriteLine(" Employee Id - " + emp.EmployeeID + "\n Employee first name - " + emp.firstName + "\n Employee last name - " + emp.lastName + "\n Employee email id - " + emp.email + "\n Employee mobile number - " + emp.mobile + "\n Employee address - " + emp.address + "\n Role Id - " + emp.roleid + "\n Role Name - " + emp.roleName);
         Console.WriteLine("");
         Console.WriteLine("");
     }
@@ -403,7 +432,7 @@ public class EmpManagement
 
             if (e.EmployeeID == eid)
             {
-                Console.WriteLine(" Name of the Employee - " + e.firstName +" "+e.lastName+ "\n Employee Id - " + e.EmployeeID );
+                Console.WriteLine(" Name of the Employee - " + e.firstName + " " + e.lastName + "\n Employee Id - " + e.EmployeeID);
             }
             else
             {
@@ -430,18 +459,18 @@ public class Role
 //Class which consists of methods for adding and viewing roles
 public class RoleManagement
 {
-  
-    
+
+
     public List<Role> RoleList = new List<Role>();
 
-    
-  
+
+
     //Method for adding roles
     public void RoleAdd(Role role)
     {
         RoleList.Add(role);
     }
-    
+
     //Method for viewing all roles
     public void displayRole()
     {
@@ -451,21 +480,22 @@ public class RoleManagement
             Console.WriteLine();
         }
     }
+
 }
 
-public class AddEmptoProject 
+public class AddEmptoProject
 {
-       
+
     public string ProjectName { get; set; }
-    public int  EmployeeID { get; set; }
+    public int EmployeeID { get; set; }
     Project projecting = new Project();
     Employee employing = new Employee();
     public AddEmptoProject(string projectName, int employeeID)
     {
 
-        this.ProjectName= projectName;
+        this.ProjectName = projectName;
         projectName = projecting.ProjectName;
-        this.EmployeeID= employeeID;
+        this.EmployeeID = employeeID;
         employeeID = employing.EmployeeID;
     }
 
@@ -483,10 +513,10 @@ public class AddingEmptoProject
     {
         AddingEmplist.Add(add);
     }
-
-    public void displayingemp() 
+    
+    public void displayingemp()
     {
-        foreach(var e in AddingEmplist)
+        foreach (var e in AddingEmplist)
         {
             Console.WriteLine(e.ProjectName);
         }
